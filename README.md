@@ -1,2 +1,2 @@
 # moongo-express-react-demo
-This is a demo application for build using react, moongo &amp; express
+This is an application build using react, moongo, socket.io &amp; express
