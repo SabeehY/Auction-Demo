@@ -7,22 +7,59 @@ import {mapUrl} from 'utils/url.js';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import SocketIo from 'socket.io';
+import mongoose from 'mongoose';
+import passport from 'passport';
 
 const pretty = new PrettyError();
 const app = express();
 
 const server = new http.Server(app);
+const MongoStore = require('connect-mongo')(session);
 
 const io = new SocketIo(server);
 io.path('/ws');
 
+app.use(bodyParser.json({limit: '2mb'}));
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(session({
-  secret: 'react and redux rule!!!!',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 60000 }
+  secret: 'this is my new random 23 1234 key 23',
+  store: new MongoStore({ url: config.database.url }),
+  cookie: {maxAge: 3600000000}, // one hour
+  saveUninitialized: true,
+  resave: true
 }));
-app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
+
+//
+  // MongoDB Connections ** CUSTOM **
+  // -----------------------------------------------------------------------------
+
+// Create the database connection
+mongoose.connect(config.database.url);
+
+// CONNECTION EVENTS
+// When successfully connected
+mongoose.connection.on('connected', () => {
+  console.info('----\n==> 🍃  Mongoose default connection open to ' + config.database.url);
+});
+// If the connection throws an error
+mongoose.connection.on('error', (err) => {
+  console.error('Mongoose default connection error: ' + err);
+});
+// When the connection is disconnected
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose default connection disconnected');
+});
+
+// If the Node process ends, close the Mongoose connection
+process.on('SIGINT', () => {
+  mongoose.connection.close(() => {
+    console.log('Mongoose default connection disconnected through app termination');
+    process.exit(0);
+  });
+});
 
 
 app.use((req, res) => {

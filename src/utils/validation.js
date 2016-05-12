@@ -8,6 +8,13 @@ export function email(value) {
   }
 }
 
+export function phone(value) {
+  // Let's not start a debate on email regex. This is just for an example app!
+  if (!isEmpty(value) && !/^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/i.test(value)) {
+    return 'Invalid phone number';
+  }
+}
+
 export function required(value) {
   if (isEmpty(value)) {
     return 'Required';

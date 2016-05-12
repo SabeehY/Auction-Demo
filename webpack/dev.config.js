@@ -92,6 +92,11 @@ module.exports = {
       { test: webpackIsomorphicToolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' }
     ]
   },
+  eslint: {
+    fix: true,
+    failOnWarning: false,
+    failOnError: true
+  },
   progress: true,
   resolve: {
     modulesDirectories: [

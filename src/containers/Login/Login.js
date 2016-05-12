@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
 import * as authActions from 'redux/modules/auth';
 
+import {LoginForm} from 'components';
+
 @connect(
   state => ({user: state.auth.user}),
   authActions)
@@ -27,22 +29,10 @@ export default class Login extends Component {
       <div className={styles.loginPage + ' container'}>
         <Helmet title="Login"/>
         <h1>Login</h1>
-        {!user &&
-        <div>
-          <form className="login-form form-inline" onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <input type="text" ref="username" placeholder="Enter a username" className="form-control"/>
-            </div>
-            <button className="btn btn-success" onClick={this.handleSubmit}><i className="fa fa-sign-in"/>{' '}Log In
-            </button>
-          </form>
-          <p>This will "log you in" as this user, storing the username in the session of the API server.</p>
-        </div>
-        }
+        {!user && <LoginForm onSubmit={this.props.login} />}
         {user &&
         <div>
-          <p>You are currently logged in as {user.name}.</p>
-
+          <p>You are currently logged in as {user.username}.</p>
           <div>
             <button className="btn btn-danger" onClick={logout}><i className="fa fa-sign-out"/>{' '}Log Out</button>
           </div>
