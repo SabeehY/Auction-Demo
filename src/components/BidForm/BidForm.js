@@ -16,7 +16,7 @@ export default class BidForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      submitted: false
+      submitted: this.props.hasValue
     };
   }
 
@@ -31,7 +31,6 @@ export default class BidForm extends React.Component {
 
   render() {
     const {fields: {amount}, deal} = this.props;
-    console.log('props', this.props);
     return (
       <form>
         <Row className="form-group">
@@ -39,14 +38,14 @@ export default class BidForm extends React.Component {
           <Col sm={3}>
             <input {...amount}
               onChange={(ev, value) => {
-                this.setState({ submitted: false });
+                if (this.state.submitted) this.setState({ submitted: false });
                 amount.onChange(ev, value);
               }}
               type="number"
               className="form-control"
               placeholder="Enter your bid"/>
           </Col>
-          <Col sm={2}>
+          <Col sm={8}>
             { this.state.submitted && !amount.touched && 'Your bid has been submitted' ||
               <Button type="submit" onClick={this.props.handleSubmit} bsStyle="primary">Submit</Button>
             }

@@ -11,13 +11,14 @@ const User = new Schema({
   company: String,
   email: String,
   phone: String,
+  timeEnd: Number,
   bids: [{type: Schema.Types.ObjectId, ref: 'Bid'}]
 
 }, {timestamps: true});
 
 User.plugin(passportLocalMongoose, {
   usernameField: 'username',
-  selectFields: 'username company email phone',
+  selectFields: 'username company email phone timeEnd',
   errorMessages: {
     IncorrectUsernameError: 'The username you entered is incorrect. Try again.',
     IncorrectPasswordError: 'Incorrect password. Try again.',

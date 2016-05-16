@@ -30,6 +30,9 @@ function initSocket() {
   socket.on('msg', (data) => {
     console.log(data);
   });
+  socket.on('newBid', (data) => {
+    console.log('New bid', data);
+  });
 
   return socket;
 }

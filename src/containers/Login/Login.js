@@ -1,18 +1,24 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
-import * as authActions from 'redux/modules/auth';
+import { push } from 'react-router-redux';
 
+import * as authActions from 'redux/modules/auth';
 import {LoginForm} from 'components';
 
 @connect(
   state => ({user: state.auth.user}),
-  authActions)
+  {...authActions, pushState: push})
 export default class Login extends Component {
   static propTypes = {
     user: PropTypes.object,
     login: PropTypes.func,
-    logout: PropTypes.func
+    logout: PropTypes.func,
+    pushState: PropTypes.func
+  }
+
+  componentDidMount() {
+    if (this.props.user) this.props.pushState('/deals');
   }
 
   handleSubmit = (event) => {
@@ -21,6 +27,7 @@ export default class Login extends Component {
     this.props.login(input.value);
     input.value = '';
   }
+
 
   render() {
     const {user, logout} = this.props;

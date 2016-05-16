@@ -44,7 +44,7 @@ export default class App extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
       // login
-      this.props.pushState('/myDeals');
+      this.props.pushState('/deals');
     } else if (this.props.user && !nextProps.user) {
       // logout
       this.props.pushState('/');
@@ -74,6 +74,14 @@ export default class App extends Component {
             <Navbar.Toggle/>
           </Navbar.Header>
 
+          <Nav>
+            <LinkContainer to="/admin">
+              <NavItem eventKey={10}>
+                Admin
+              </NavItem>
+            </LinkContainer>
+          </Nav>
+
           <Navbar.Collapse eventKey={0}>
             <Nav navbar pullRight>
               {!user &&
@@ -89,11 +97,14 @@ export default class App extends Component {
               {user &&
                 <Nav>
                   <p className={styles.loggedInMessage + ' navbar-text'}>Hello <strong>{user.username}</strong></p>
-                  <LinkContainer to="/logout">
-                    <NavItem eventKey={6} className="logout-link" onClick={this.handleLogout}>
-                      Logout
+                  <LinkContainer to="/deals">
+                    <NavItem eventKey={7}>
+                     Deals
                     </NavItem>
                   </LinkContainer>
+                  <NavItem eventKey={6} className="logout-link" onClick={this.handleLogout}>
+                    Logout
+                  </NavItem>
                 </Nav>
               }
             </Nav>

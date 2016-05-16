@@ -3,6 +3,7 @@ export App from './App/App';
 export Signup from './Signup/Signup';
 export Admin from './Admin/Admin';
 export Deals from './Deals/Deals';
+export Results from './Results/Results';
 
 export Chat from './Chat/Chat';
 export Home from './Home/Home';

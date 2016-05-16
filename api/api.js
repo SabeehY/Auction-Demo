@@ -115,6 +115,11 @@ if (config.apiPort) {
       }
     });
 
+    socket.on('bid', (data) => {
+      io.emit('newBid', data);
+      console.log('getting bid data', data);
+    });
+
     socket.on('msg', (data) => {
       data.id = messageIndex;
       messageBuffer[messageIndex % bufferSize] = data;
