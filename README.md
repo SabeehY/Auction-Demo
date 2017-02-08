@@ -1,6 +1,9 @@
 # Auction Demo App
 
 This is a sample auction application build in ReactJS, MongoDB, SocketIO and ExpressJS.
+Allows users to signup/login and place a bid on a deal.
+Admins can see the bids being placed in real-time using socket.io.
+Once the timer expires, the bids close and won/lost status is displayed to the users.
 
 ## Instructions
 
